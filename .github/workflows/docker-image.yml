@@ -15,4 +15,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag postgres-1252:$(date +%s)
+    - name: Push the Docker image
+      run: |
+        echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        docker tag postgres-1252:$(date +%s) ghcr.io/luckinber/postgres-1252:latest
+        docker push ghcr.io/luckinber/postgres-1252:latest
