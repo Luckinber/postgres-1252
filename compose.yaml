@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: ghcr.io/luckinber/postgres-1252:latest
+    environment:
+      PGPORT: '5432'
+      POSTGRES_DB: c9
+      POSTGRES_INITDB_ARGS: '--encoding=WIN1252 --lc-collate=en_AU.1252 --lc-ctype=en_AU.1252 --lc-messages=en_AU.1252 --lc-monetary=en_AU.1252 --lc-numeric=en_AU.1252 --lc-time=en_AU.1252'
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      TZ: Etc/UTC
+      UMASK: '002'
+      UMASK_SET: '002'
+    ports:
+      - 5433:5432
+    restart: unless-stopped
+    healthcheck:
+      interval: 30s
+      retries: 5
+      start_interval: 2s
+      start_period: 15s
+      test:
+        - CMD
+        - pg_isready
+        - '-h'
+        - 127.0.0.1
+        - '-p'
+        - '5432'
+        - '-U'
+        - postgres
+        - '-d'
+        - c9
+      timeout: 5s
