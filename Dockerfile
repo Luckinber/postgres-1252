@@ -2,7 +2,8 @@
 FROM postgres:10.23-bullseye
 
 # Example for Debian/Ubuntu based images
-RUN apt-get update && apt-get install -y locales
+RUN sed -i 's|http://apt.postgresql.org/pub/repos/apt|http://apt-archive.postgresql.org/pub/repos/apt|' /etc/apt/sources.list.d/pgdg.list \
+ && apt-get update && apt-get install -y locales
 RUN localedef -f CP1252 -i /usr/share/i18n/locales/en_AU /usr/lib/locale/en_AU.1252
 RUN echo "en_AU.1252 CP1252" >> /etc/locale.gen
 RUN locale-gen
