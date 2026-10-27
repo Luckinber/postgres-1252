@@ -1,5 +1,5 @@
 # Use a base image (e.g., Ubuntu)
-FROM postgres:latest
+FROM postgres:10.23-bullseye
 
 # Example for Debian/Ubuntu based images
 RUN apt-get update && apt-get install -y locales
